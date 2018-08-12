@@ -31,6 +31,7 @@ module.exports = (req, res, next) => {
         return res.send('Unauthorized').status(401);
       }
       req.shim.userId = user.id;
+      req.shim.user = user;
       return next();
     }
   );

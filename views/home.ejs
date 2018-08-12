@@ -1,0 +1,52 @@
+<html>
+<head>
+  <title>Home</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+</head>
+<% include ./navbar.ejs %>
+<body>
+
+  <div class="container">
+
+    <div class="row">
+
+      <div class="col-xl-8 offset-xl-2 py-5">
+        <h2>
+          Hi <%- user.name%>,
+        </h2>
+        Your registered number is <strong><%- user.phoneNumber %></strong>
+      </div>
+
+      </div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js" integrity="sha256-dHf/YjH1A4tewEsKUSmNnV05DDbfGN3g7NMq86xgGh8=" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+      $("#signup-form").submit(function(e) {
+        e.preventDefault();
+        var postData = {
+          name: document.getElementById("name").value,
+          password: document.getElementById("password").value,
+          phoneNumber: document.getElementById("phoneNumber").value,
+        }
+        var url = 'http://127.0.0.1:50000/api/signup';
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: postData,
+          success: function(data) {
+            window.location = 'http://127.0.0.1:50000/login'
+          },
+          dataType: 'json'
+        });
+      });
+    </script>
+  </body>
+  </html>

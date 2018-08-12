@@ -3,15 +3,26 @@
     <div class="collapse navbar-collapse" id="navbarColor03">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" href="/">Home</a>
+          <a class="nav-link" href="/home">Home</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/contacts">Contacts</a>
         </li>
       </ul>
       <form class="form-inline">
-        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Logout</button>
+        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" onclick="logout()">Logout</button>
       </form>
     </div>
   </nav>
 </div>
+<script type="text/javascript">
+  function logout() {
+    var cookies = document.cookie.split(";");
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i];
+      var eqPos = cookie.indexOf("=");
+      var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+      document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+  }
+</script>

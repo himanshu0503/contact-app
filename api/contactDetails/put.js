@@ -16,7 +16,7 @@ module.exports = (req, res) => {
 
   async.series([
     _checkInputParams.bind(null, bag),
-    _post.bind(null, bag)
+    _put.bind(null, bag)
     ],
     function (err) {
       logger.info(bag.who, 'Completed');
@@ -35,8 +35,10 @@ function _checkInputParams(bag, next) {
   return next();
 }
 
-function _post(bag, next) {
-  var who = bag.who + '|' + _post.name;
+//TODO: Add logic to check if a user can actually edit this thing.
+
+function _put(bag, next) {
+  var who = bag.who + '|' + _put.name;
   logger.debug(who, 'Inside');
 
   var newContactDetail = {
