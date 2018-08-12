@@ -6,9 +6,9 @@ function route (app) {
     res.render('../views/signup.ejs', {});
   });
 
-  app.get('/contacts', validateUser, (req, res) => {
-    res.render('../views/contacts.ejs', {});
-  });
+  app.get(['/contacts', '/contacts/:pageOffset'], validateUser, require('./contacts/getS'));
+
+  app.post('/api/contacts', validateUser, require('./contacts/post'));
 
   app.post('/api/signup', require('./users/signup'));
   app.post('/api/login', require('./users/login'));

@@ -15,12 +15,13 @@ module.exports = (req, res, next) => {
   bag.who = util.format('%s|%s|%s', req.method, req.url, 'validateUser');
   logger.debug(bag.who, 'Started');
 
-  if (!req.cookies.authToken)
+  if (!req.cookies.authToken && !req.headers.authorization)
     return res.send('Unauthorized').status(401);
 
+  let authToken = req.headers.authorization || req.cookies.authToken;
   let query = {
     where: {
-      authToken: req.cookies.authToken
+      authToken: authToken
     }
   }
   //TODO: Replace this with redis

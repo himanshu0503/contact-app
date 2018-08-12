@@ -7,52 +7,59 @@
   <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
 </head>
 <body>
-
+  <% if (contacts.length > 0) { %>
   <div class="container">
     <div class="row">
-      <div class="col-xl-8 offset-xl-2 py-5">
-        <h1>Contact</h1>
-        <!-- We're going to place the form here in the next step -->
-        <form id="login-form" role="form">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>Phone Number</label>
-                  <input id="phoneNumber" type="number" name="phoneNumber" class="form-control" placeholder="Please enter your phone number" required="required" data-error="Phone Number  is required.">
-                  <div class="help-block with-errors"></div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="form_name">Password</label>
-                  <input id="password" type="password" name="password" class="form-control" placeholder="Please enter your password" required="required" data-error="Password is required.">
-                  <div class="help-block with-errors"></div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <input type="submit" class="btn btn-success btn-send" value="Login">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <p class="text-muted">
-                  First time user?<strong><a href='/signup'> SignUp Here</a></strong>
-                </div>
-              </div>
-            </div>
-
-          </form>
-
-        </div>
-
+      <div class="col-xl-8">
+      </br>
+      </br>
       </div>
-
     </div>
-
+    <div class="row col-xl-8">
+      <a href="/newContact" class="btn btn-primary" role="button">Add a New Contact</a>
+    </div>
+    </br>
+    <div class="row col-xl-8">
+      <h3>Existing Contacts</h3>
+    </div>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Phone Number</th>
+          <th>Additional Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (var i = 0; i < contacts.length; i++) {%>
+          <tr>
+            <td><%- contacts[i].name -%></td>
+            <td><%- contacts[i].phoneNumber -%></td>
+            <td><a href='/contactDetails/<%- contacts[i].id -%>/edit'>Details</a></td>
+          </tr>
+        <% }%>
+      </tbody>
+    </table>
+      <ul class="pagination justify-content-center">
+        <% if (previousPage) { %>
+          <li class="page-item"><a class="page-link" href="/contacts/<%= previousPage%>">Previous</a></li>
+        <% } %>
+        <li class="page-item active"><a class="page-link" href="/contacts/<%= currentPage%>"><%- currentPage%></a></li>
+        <li class="page-item"><a class="page-link" href="/contacts/<%= nextPage%>">Next</a></li>
+      </ul>
+  </div>
+  <%} else {%>
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-8 offset-xl-2 py-5">
+          <h1>No contacts found, please add some</h1>
+        </div>
+      </div>
+    </div>
+  <% } %>
+  <div class="container">
+    
+  </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>        
