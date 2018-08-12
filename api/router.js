@@ -6,13 +6,15 @@ function route (app) {
     res.render('../views/signup.ejs', {});
   });
 
-  app.get('/newContact', (req, res) => {
+  app.get('/newContact', validateUser, (req, res) => {
     res.render('../views/newContact.ejs', {});
   });
 
+  app.get('/contactDetails/:contactId/edit', validateUser, require('./contactDetails/getById'));
+
   app.get(['/contacts', '/contacts/:pageOffset'], validateUser, require('./contacts/getS'));
 
-
+  app.put('/api/contactDetails/:contactId/edit', validateUser, require('./contactDetails/post'));
   app.post('/api/contacts', validateUser, require('./contacts/post'));
 
   app.post('/api/signup', require('./users/signup'));

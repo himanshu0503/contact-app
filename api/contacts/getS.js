@@ -8,7 +8,8 @@ module.exports = (req, res) => {
     reqBody: req.body,
     userId: req.shim.userId,
     reqParams: req.params,
-    contacts: []
+    contacts: [],
+    displayNext: false
   };
 
   bag.who = 'contacts|getS';
@@ -27,10 +28,14 @@ module.exports = (req, res) => {
       if (req.params.pageOffset > 1) {
         previousPage = req.params.pageOffset - 1;
       }
+      let nextPage = '';
+      if (bag.displayNext) {
+        nextPage = parseInt(req.params.pageOffset) + 1 || 2;
+      }
       res.render('../../views/contacts.ejs', {
         contacts: bag.contacts,
         currentPage: req.params.pageOffset || 1,
-        nextPage: parseInt(req.params.pageOffset) + 1 || 2,
+        nextPage,
         previousPage
       });
     }
@@ -48,14 +53,14 @@ function _getContacts(bag, next) {
   var who = bag.who + '|' + _getContacts.name;
   logger.debug(who, 'Inside');
 
-  let limit = 1;
+  let limit = 10;
   let offset = (bag.reqParams.pageOffset - 1 )* limit || 0;
   var query = {
     where: {
       userId: bag.userId
     },
     offset: offset,
-    limit: limit,
+    limit: limit + 1,
     order: [
       ['name', 'ASC']
     ]
@@ -65,7 +70,9 @@ function _getContacts(bag, next) {
     function (err, contacts) {
       if (err)
         return next('contacts.findOne failed with error: ' + err.message);
-      bag.contacts = contacts;
+      if (contacts.length > limit)
+        bag.displayNext = true;
+      bag.contacts = contacts.splice(0, limit);
       return next();
     }
   );
