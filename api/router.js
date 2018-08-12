@@ -2,6 +2,10 @@
 function route (app) {
   let validateUser = require('./middleware/validateUser');
   
+  app.get('/tests', (req, res) => {
+    res.send({result: 'ok'}).status(200);
+  });
+
   app.get('/signup', (req, res) => {
     res.render('../views/signup.ejs', {});
   });
