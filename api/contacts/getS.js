@@ -30,7 +30,7 @@ module.exports = (req, res) => {
       res.render('../../views/contacts.ejs', {
         contacts: bag.contacts,
         currentPage: req.params.pageOffset || 1,
-        nextPage: parseInt(req.params.pageOffset) + 1,
+        nextPage: parseInt(req.params.pageOffset) + 1 || 2,
         previousPage
       });
     }
