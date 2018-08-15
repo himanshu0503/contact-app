@@ -8,6 +8,8 @@ module.exports = (req, res, next) => {
 
   //LOGIC to parse basicAuth
   var auth = req.headers['authorization'];
+  if (!auth)
+    return res.status(401).send('Unauthorized');
   var tmp = auth.split(' ');
   var buf = new Buffer(tmp[1], 'base64');
   var plain_auth = buf.toString();
@@ -21,12 +23,14 @@ module.exports = (req, res, next) => {
       password: password
     }
   };
+  console.log('query');
   //TODO: Replace this with redis
   users.findOne(query).asCallback(
     function (err, user) {
       if (err || _.isEmpty(user)) {
-        return res.send('Unauthorized').status(401);
+        res.status(401).send('Unauthorized');
       }
+      console.log(user.id);
       req.shim.userId = user.id;
       req.shim.user = user;
       return next();

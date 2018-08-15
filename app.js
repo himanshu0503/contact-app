@@ -224,7 +224,7 @@ function setLogLevel(bag, next) {
   logger.debug(who, 'Inside');
 
   let loggerConfig = {};
-  //loggerConfig.runMode = 'production';
+  loggerConfig.runMode = 'production';
 
   logger.debug('Setting log level as ' + loggerConfig.runMode);
   logger.configLevel(loggerConfig);
