@@ -7,7 +7,6 @@ module.exports = (req, res) => {
   console.log('insdie delete');
   var bag = {
     resBody: {},
-    reqBody: req.body,
     inputParams: req.params,
   };
 
@@ -43,16 +42,17 @@ function _checkInputParams(bag, next) {
 
   return next();
 }
-
+//TODO: All logic to delete address
 function _delete(bag, next) {
   var who = bag.who + '|' + _delete.name;
   logger.debug(who, 'Inside');
 
   let query = {
     where: {
-      id: bag.reqBody.contactId
+      id: bag.inputParams.contactId
     }
   }
+
   contacts.destroy(query).asCallback(
     function(err, contact) {
       if (err) {
