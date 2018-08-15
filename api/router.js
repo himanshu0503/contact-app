@@ -1,36 +1,11 @@
 'use strict';
 function route (app) {
   let validateUser = require('./middleware/validateUser');
-  
-  app.get('/tests', (req, res) => {
-    res.send({result: 'ok'}).status(200);
-  });
 
-  app.get('/signup', (req, res) => {
-    res.render('../views/signup.ejs', {});
-  });
-  app.get('/newContact', validateUser, (req, res) => {
-    res.render('../views/newContact.ejs', {});
-  });
-
-  app.get('/contactDetails/:contactId/edit', validateUser, require('./contactDetails/getById'));
-  app.get('/home', validateUser, (req, res) => {
-    res.render('../views/home.ejs', {
-      user: req.shim.user
-    });
-  });
-
-  app.get(['/contacts', '/contacts/:pageOffset'], validateUser, require('./contacts/getS'));
-
-  app.put('/api/contactDetails/:contactId/edit', validateUser, require('./contactDetails/put'));
-  app.post('/api/contacts', validateUser, require('./contacts/post'));
-
-  app.post('/api/signup', require('./users/signup'));
-  app.post('/api/login', require('./users/login'));
-  
-  app.get(['/login','*'], (req, res) => {
-    res.render('../views/login.ejs', {});
-  });
+  app.post('/api/v1/contacts', require('./contacts/post'));
+  //app.put('/api/v1/contacts/:contactId', validateUser, require('./contacts/put'));
+  //app.delete('/api/v1/contacts/:contactId', validateUser, require('./contacts/delete'));
+  //app.get('/api/v1/contacts/search/', validateUser, require('./contacts/search'));
 }
 
 module.exports.route = route;
