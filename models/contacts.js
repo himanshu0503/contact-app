@@ -13,9 +13,9 @@ var contacts = global.sequelize.define('contacts', {
     field: 'name',
     allowNull: true
   },
-  userId: {
-    type: Sequelize.INTEGER,
-    field: 'userId',
+  email: {
+    type: Sequelize.STRING(32),
+    field: 'email',
   },
   phoneNumber: {
     type: Sequelize.BIGINT,
@@ -26,13 +26,13 @@ var contacts = global.sequelize.define('contacts', {
   tableName: 'contacts',
   indexes: [
     {
-      name: 'userContactIdU',
+      name: 'contactIdU',
       fields: ['id'],
       unique: true
     },
     {
       unique: true,
-      fields: ['userId', 'name']
+      fields: ['email']
     }
   ]
 });
